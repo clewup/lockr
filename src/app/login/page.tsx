@@ -1,8 +1,8 @@
 'use client';
 
-import { signIn } from 'next-auth/react';
+import { getSession, signIn } from 'next-auth/react';
 
-export default function Login() {
+export default async function Login() {
     return (
         <main>
             <button onClick={() => signIn('google')}>Login</button>
