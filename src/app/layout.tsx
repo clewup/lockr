@@ -3,7 +3,7 @@ import { UserProvider } from '@/contexts/UserContext/UserContext';
 import { ReactNode } from 'react';
 
 export const metadata = {
-    title: 'Authee',
+    title: 'Locker',
     description: 'Authentication Service',
 };
 
