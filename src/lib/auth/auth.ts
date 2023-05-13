@@ -5,9 +5,14 @@ import GoogleProvider from 'next-auth/providers/google';
 import constants from '@/constants/constants';
 
 export const authOptions: NextAuthOptions = {
-    session: {
-        strategy: 'jwt',
-    },
     providers: [GoogleProvider({ clientId: constants.GOOGLE_CLIENT_ID, clientSecret: constants.GOOGLE_CLIENT_SECRET })],
     adapter: PrismaAdapter(prisma),
+    callbacks: {
+        session({ session, user }) {
+            return {
+                ...session,
+                user: user,
+            };
+        },
+    },
 };

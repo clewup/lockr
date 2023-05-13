@@ -1,13 +1,22 @@
+'use client';
+
 import AppCard from '@/components/AppCard/AppCard';
 import apps from '@/constants/data/apps';
-import { getServerSession } from 'next-auth';
+import useAuthorizationCode from '@/hooks/useAuthorizationCode/useAuthorizationCode';
+import { useSession } from 'next-auth/react';
 import { redirect } from 'next/navigation';
 
 export default async function Home() {
-    const session = await getServerSession();
+    const { data: session } = useSession();
+    const { isLoading } = useAuthorizationCode({ isAuthed: true });
 
     if (!session) {
         redirect('/login');
+        return null;
+    }
+
+    if (isLoading) {
+        return <p>Loading...</p>;
     }
 
     return (

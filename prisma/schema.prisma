@@ -47,7 +47,7 @@ model User {
   accounts          Account[]
   sessions          Session[]
   role              Role               @default(User)
-  authorisationCode AuthorisationCode?
+  authorizationCode AuthorizationCode?
 }
 
 model VerificationToken {
@@ -58,7 +58,7 @@ model VerificationToken {
   @@unique([identifier, token])
 }
 
-model AuthorisationCode {
+model AuthorizationCode {
   id      String   @id @default(cuid())
   code    String
   expires DateTime
