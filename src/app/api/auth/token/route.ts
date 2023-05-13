@@ -1,5 +1,6 @@
 import { prisma } from '@/lib/prisma/prisma';
 import { User } from '@prisma/client';
+import exp from 'constants';
 import moment from 'moment';
 import { NextResponse as response } from 'next/server';
 import * as jwt from 'jsonwebtoken';
@@ -17,11 +18,17 @@ export async function POST(request: Request) {
         return response.json({}, { status: 400, statusText: 'Invalid authorization_code' });
     }
 
-    // verify that the code, once decoded, contains the user's id
-    const decodedToken = jwt.decode(code);
+    const decodedToken = jwt.decode(code) as any;
     const userId = decodedToken?.sub;
+    const expiry = decodedToken?.exp;
+
+    // verify that the code, once decoded, contains the user's id
     if (!userId || typeof userId !== 'string') {
         return response.json({}, { status: 400, statusText: 'Invalid authorization_code' });
+    }
+    // verify that the code has not expired
+    if (moment(expiry).isAfter(moment())) {
+        return response.json({}, { status: 400, statusText: 'Expired authorization_code' });
     }
 
     // query the database for a matching authorization code
@@ -32,6 +39,10 @@ export async function POST(request: Request) {
     });
     if (!validCode) {
         return response.json({}, { status: 400, statusText: 'Invalid authorization_code' });
+    }
+    // verify that the validated code has not expired
+    if (moment(validCode.expires).isAfter(moment())) {
+        return response.json({}, { status: 400, statusText: 'Expired authorization_code' });
     }
 
     // create the access token with the user information
