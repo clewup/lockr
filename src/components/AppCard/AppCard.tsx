@@ -1,7 +1,6 @@
 'use client';
 
 import { AppType } from '@/types/appTypes';
-import Link from 'next/link';
 import { FC, useState } from 'react';
 import cx from 'classnames';
 import { SyncLoader } from 'react-spinners';
