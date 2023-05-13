@@ -19,7 +19,7 @@ export async function POST(request: Request) {
             sub: session.user?.id,
         };
 
-        return jwt.sign(payload, constants.NEXTAUTH_SECRET, { expiresIn: moment().add(5, 'minutes').unix() });
+        return jwt.sign(payload, constants.SECRET, { expiresIn: moment().add(5, 'minutes').unix() });
     }
     const code = createAuthorizationCode(session);
 

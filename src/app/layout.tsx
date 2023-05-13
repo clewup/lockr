@@ -14,7 +14,7 @@ export const metadata = {
 };
 
 async function getSession(cookie: string): Promise<Session | null> {
-    const response = await fetch(`${constants.NEXTAUTH_URL}/api/auth/session`, {
+    const response = await fetch(`${constants.APP_URL}/api/auth/session`, {
         headers: {
             cookie,
         },
