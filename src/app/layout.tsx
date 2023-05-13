@@ -1,4 +1,5 @@
 import './globals.css';
+import Footer from '@/components/Footer/Footer';
 import Header from '@/components/Header/Header';
 import SideMenu from '@/components/SideMenu/SideMenu';
 import constants from '@/constants/constants';
@@ -36,10 +37,11 @@ export default async function RootLayout({ children }: { children: ReactNode }) 
                         {session ? (
                             <>
                                 <Header />
-                                <div className="flex">
+                                <div className="flex min-h-screen-header">
                                     <SideMenu />
                                     {children}
                                 </div>
+                                <Footer />
                             </>
                         ) : (
                             <>{children}</>
