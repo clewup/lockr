@@ -1,4 +1,5 @@
 import './globals.css';
+import CookieBanner from '@/components/CookieBanner/CookieBanner';
 import Footer from '@/components/Footer/Footer';
 import Header from '@/components/Header/Header';
 import SideMenu from '@/components/SideMenu/SideMenu';
@@ -41,6 +42,7 @@ export default async function RootLayout({ children }: { children: ReactNode }) 
                                     <SideMenu />
                                     {children}
                                 </div>
+                                <CookieBanner />
                                 <Footer />
                             </>
                         ) : (
