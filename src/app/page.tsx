@@ -1,6 +1,7 @@
 'use client';
 
 import AppCard from '@/components/AppCard/AppCard';
+import Wrapper from '@/components/Wrapper/Wrapper';
 import apps from '@/constants/data/apps';
 import useAuthorizationCode from '@/hooks/useAuthorizationCode/useAuthorizationCode';
 import { useSession } from 'next-auth/react';
@@ -20,12 +21,12 @@ export default async function Home() {
     }
 
     return (
-        <main>
+        <Wrapper>
             <div className="grid grid-cols-5">
                 {apps.map((app, index) => (
                     <AppCard key={index} app={app} />
                 ))}
             </div>
-        </main>
+        </Wrapper>
     );
 }

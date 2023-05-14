@@ -1,9 +1,10 @@
+import Wrapper from '@/components/Wrapper/Wrapper';
 import metadata from '@/constants/metadata';
 
 export default function Privacy() {
     return (
-        <main>
-            <div className="flex flex-col gap-10 p-5">
+        <Wrapper>
+            <div className="flex flex-col gap-10">
                 {metadata.policies.privacy.map((policy, index) => (
                     <div key={index}>
                         <h1 className="text-2xl font-bold">
@@ -13,6 +14,6 @@ export default function Privacy() {
                     </div>
                 ))}
             </div>
-        </main>
+        </Wrapper>
     );
 }
