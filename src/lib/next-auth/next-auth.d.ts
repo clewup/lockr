@@ -4,7 +4,7 @@ declare module 'next-auth' {
     interface User extends PrismaUser {
         id: string;
         name: string | null | undefined;
-        email: string | null | undefined;
+        email: string;
         emailVerified: Date | null | undefined;
         image: string | null | undefined;
         role: Role;
