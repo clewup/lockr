@@ -35,7 +35,8 @@
     "react-google-button": "^0.7.2",
     "react-spinners": "^0.13.8",
     "tailwindcss": "^3.3.2",
-    "typescript": "5.0.4"
+    "typescript": "5.0.4",
+    "yup": "^1.1.1"
   },
   "devDependencies": {
     "@types/jsonwebtoken": "^9.0.2"

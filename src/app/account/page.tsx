@@ -1,4 +1,4 @@
-import UserForm from '@/components/AccountForm/UserForm';
+import UserForm from '@/components/UserForm/UserForm';
 import Wrapper from '@/components/Wrapper/Wrapper';
 import constants from '@/constants/constants';
 import { Session } from 'next-auth';
