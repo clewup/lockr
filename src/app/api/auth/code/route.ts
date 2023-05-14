@@ -1,5 +1,5 @@
 import constants from '@/constants/constants';
-import { authOptions } from '@/lib/next-auth/auth';
+import { authOptions } from '@/lib/next-auth/authOptions';
 import { prisma } from '@/lib/prisma/prisma';
 import moment from 'moment';
 import { getServerSession, Session } from 'next-auth';
