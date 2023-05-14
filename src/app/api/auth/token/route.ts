@@ -9,7 +9,7 @@ export async function POST(request: Request) {
     const body = await request.json();
     const code = body.authorization_code;
 
-    // verify that a code has been passed in the body with the correct type
+    // validate that a code has been passed in the body with the correct type
     if (!code) {
         return response.json({}, { status: 400, statusText: 'Missing authorization_code' });
     }
@@ -19,6 +19,7 @@ export async function POST(request: Request) {
 
     const decodedToken = jwt.decode(code) as any;
     const userId = decodedToken?.sub;
+    const applicationId = decodedToken.application_id;
     const expiry = decodedToken?.exp;
 
     // verify that the code, once decoded, contains the user's id
@@ -34,7 +35,13 @@ export async function POST(request: Request) {
     // verify that the queried entity exists
     const validCode = await prisma.authorizationCode.findUnique({
         include: { user: true },
-        where: { code: code, userId: userId },
+        where: {
+            code: code,
+            userId_applicationId: {
+                userId: userId,
+                applicationId: applicationId,
+            },
+        },
     });
     if (!validCode) {
         return response.json({}, { status: 400, statusText: 'Invalid authorization_code' });

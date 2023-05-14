@@ -12,7 +12,7 @@ interface UserFormProps {
 }
 
 const UserForm: FC<UserFormProps> = ({ user }) => {
-    const { update } = useSession();
+    const { update: updateSession } = useSession();
 
     const [isEditing, setEditing] = useState(false);
 
@@ -34,7 +34,7 @@ const UserForm: FC<UserFormProps> = ({ user }) => {
     });
 
     async function onSubmit(formValues: FormikValues) {
-        await update({ user: formValues });
+        await updateSession({ user: formValues });
         setEditing(false);
     }
 

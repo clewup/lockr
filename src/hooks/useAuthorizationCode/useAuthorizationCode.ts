@@ -14,33 +14,48 @@ const useAuthorizationCode = ({ isAuthed = false }: UseAuthorizationCodeProps) =
 
     const [isLoading, setLoading] = useState(false);
 
-    // if a redirect_uri param has been provided
-    // set the cookie for consumption after sign in
-    function setRedirectCookie() {
+    // if a redirect_uri and application_id params have been provided
+    // set the cookies for consumption after sign in
+    function setAuthorizationCookies() {
         setLoading(true);
         const redirectUri = searchParams.get('redirect_uri');
+        const applicationId = searchParams.get('application_id');
 
-        if (redirectUri) {
+        if (redirectUri && applicationId) {
             setCookie('lockr.redirect-uri', redirectUri, {
+                path: '/',
+            });
+            setCookie('lockr.application-id', applicationId, {
                 path: '/',
             });
         }
         setLoading(false);
     }
     useEffect(() => {
-        setRedirectCookie();
+        setAuthorizationCookies();
     }, [searchParams]);
 
-    // check if a redirect cookie is present
+    // check if a redirect and application id cookies are present
     // create an authorization code
     // redirect to the uri with the code param
-    async function consumeRedirectCookie() {
+    async function consumeAuthorizationCookies() {
         const redirectUri = getCookie('lockr.redirect-uri');
+        const applicationId = getCookie('lockr.application-id');
         deleteCookie('lockr.redirect-uri');
+        deleteCookie('lockr.application-id');
 
-        if (redirectUri && typeof redirectUri === 'string') {
+        if (redirectUri && typeof redirectUri === 'string' && applicationId && typeof applicationId === 'string') {
             setLoading(true);
-            const codeResponse = await fetch('/api/auth/code', { method: 'POST' });
+            const codeResponse = await fetch('/api/auth/code', {
+                method: 'POST',
+                body: JSON.stringify({ application_id: applicationId }),
+            });
+
+            if (!codeResponse.ok) {
+                setLoading(false);
+                throw new Error('An error occurred whilst authenticating.');
+            }
+
             const codeData = await codeResponse.json();
             const code = codeData.authorization_code;
 
@@ -52,7 +67,7 @@ const useAuthorizationCode = ({ isAuthed = false }: UseAuthorizationCodeProps) =
     }
     useEffect(() => {
         if (isAuthed) {
-            consumeRedirectCookie();
+            consumeAuthorizationCookies();
         }
     }, []);
 

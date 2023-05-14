@@ -11,6 +11,7 @@ declare module 'next-auth' {
     }
 
     interface Session {
-        user?: User | null | undefined;
+        user: User;
+        applicationAccess: Record<number, Date>;
     }
 }

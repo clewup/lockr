@@ -19,9 +19,23 @@ export const authOptions: NextAuthOptions = {
                 await adapter.updateUser(newSession.user);
             }
 
+            // fetch the user's application access history and reduce it to key value pairs
+            const applicationAccess = await prisma.authorizationCode.findMany({
+                select: { applicationId: true, updatedAt: true },
+                where: { userId: user.id },
+            });
+            const reducedApplicationAccess = applicationAccess.reduce(
+                (acc: Record<number, Date>, { applicationId, updatedAt }) => {
+                    acc[applicationId] = updatedAt;
+                    return acc;
+                },
+                {}
+            );
+
             return {
                 ...session,
                 user: user,
+                applicationAccess: reducedApplicationAccess,
             };
         },
     },
