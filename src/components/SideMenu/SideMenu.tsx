@@ -1,10 +1,12 @@
 'use client';
 
-import { useSession } from 'next-auth/react';
-import Image from 'next/image';
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
+import cx from 'classnames';
 
 const SideMenu = () => {
+    const pathname = usePathname();
+
     const menuItems = [
         {
             label: 'Apps',
@@ -17,16 +19,16 @@ const SideMenu = () => {
     ];
 
     return (
-        <div className="p-5 w-[15vw]">
-            <div className="border-b-2 border-gray-200 text-2xl pb-5 flex flex-col gap-3">
+        <div className="px-5 w-[15vw] ">
+            <ul className="menu">
                 {menuItems.map((menuItem, index) => {
                     return (
-                        <Link key={index} href={menuItem.path}>
-                            <p>{menuItem.label}</p>
-                        </Link>
+                        <li key={index} className={cx({ active: pathname === menuItem.path })}>
+                            <Link href={menuItem.path}>{menuItem.label}</Link>
+                        </li>
                     );
                 })}
-            </div>
+            </ul>
         </div>
     );
 };

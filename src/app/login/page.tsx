@@ -23,10 +23,11 @@ export default function Login() {
 
     return (
         <main className="h-screen flex justify-center items-center">
-            <div className="w-1/3 border-2 border-black rounded-2xl p-10 flex flex-col justify-center items-center">
-                <span className="mb-10 border-b-2 border-gray-200">
+            <div className="w-1/3 shadow-xl rounded-2xl p-10 flex flex-col justify-center items-center">
+                <span className="mb-10">
                     <h1 className="text-3xl">Lockr</h1>
                     <p className="text-xl mb-3">Passwordless authentication.</p>
+                    <span className="divider" />
                 </span>
 
                 <GoogleButton onClick={() => signIn('google', { callbackUrl: constants.APP_URL })}>Login</GoogleButton>

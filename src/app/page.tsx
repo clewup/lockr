@@ -5,7 +5,7 @@ import { getSession } from '@/utils/functions';
 import { headers } from 'next/headers';
 
 async function getApplications() {
-    return prisma.application.findMany();
+    return prisma.application.findMany({ orderBy: [{ isEnabled: 'desc' }, { createdAt: 'desc' }] });
 }
 
 export default async function Home() {

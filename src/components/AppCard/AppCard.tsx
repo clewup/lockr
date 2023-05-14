@@ -32,24 +32,29 @@ const AppCard: FC<AppCardProps> = ({ app }) => {
 
     return (
         <div
-            className={cx(
-                'relative cursor-pointer w-52 h-52 border-2 border-black rounded-2xl m-2 flex flex-col justify-center items-center',
-                {
-                    'opacity-20 pointer-events-none': !app.isEnabled,
-                }
-            )}
+            className={cx('card relative cursor-pointer w-52 h-52 shadow-xl', {
+                'opacity-70 pointer-events-none': !app.isEnabled,
+            })}
             onClick={navigateToApp}>
             {isLoading ? (
-                <span>
+                <div className="card-body">
                     <SyncLoader size={15} />
-                </span>
+                </div>
             ) : (
-                <span className="flex flex-col gap-5 items-center">
-                    <h1 className="text-5xl capitalize">{app.name}</h1>
-                    {session?.applicationAccess[app.id] && (
-                        <p>Accessed: {moment(session?.applicationAccess[app.id]).format('DD/MM/yyyy')}</p>
-                    )}
-                </span>
+                <>
+                    <div className="card-body">
+                        <h1 className="card-title text-4xl">{app.name}</h1>
+                        {session?.applicationAccess[app.id] && (
+                            <p>Last accessed: {moment(session?.applicationAccess[app.id]).format('DD/MM/yyyy')}</p>
+                        )}
+                    </div>
+
+                    <div className="card-actions justify-end p-2">
+                        {!app.isEnabled && (
+                            <span className="badge badge-lg badge-info badge-outline">Coming Soon!</span>
+                        )}
+                    </div>
+                </>
             )}
         </div>
     );

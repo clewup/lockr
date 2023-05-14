@@ -6,6 +6,7 @@ import { useSession } from 'next-auth/react';
 import Image from 'next/image';
 import { FC, useState } from 'react';
 import * as yup from 'yup';
+import cx from 'classnames';
 
 interface UserFormProps {
     user: User;
@@ -15,6 +16,7 @@ const UserForm: FC<UserFormProps> = ({ user }) => {
     const { update: updateSession } = useSession();
 
     const [isEditing, setEditing] = useState(false);
+    const [hasSubmitted, setSubmitted] = useState(false);
 
     const initialValues = { ...user };
     const validationSchema = yup.object().shape({
@@ -33,25 +35,40 @@ const UserForm: FC<UserFormProps> = ({ user }) => {
             .required('Email is required'),
     });
 
+    function renderToast() {
+        setSubmitted(true);
+        setTimeout(() => setSubmitted(false), 4000);
+    }
+
     async function onSubmit(formValues: FormikValues) {
         await updateSession({ user: formValues });
+        renderToast();
         setEditing(false);
     }
 
     return (
         <Formik initialValues={initialValues} onSubmit={onSubmit} validationSchema={validationSchema}>
-            {() => {
+            {({ isSubmitting }) => {
                 return (
-                    <Form className="flex flex-col gap-5">
-                        <div className="flex gap-20">
-                            <h1 className="text-3xl">User Details</h1>
+                    <Form className="flex flex-col gap-5 shadow-xl p-5 rounded-2xl">
+                        <div className="flex gap-20 items-center    ">
+                            <h1 className="text-4xl font-semibold">User Details</h1>
                             {isEditing ? (
-                                <span className="flex gap-10">
-                                    <button onClick={() => setEditing(false)}>Cancel</button>
-                                    <button type="submit">Save</button>
+                                <span className="flex gap-5">
+                                    <button
+                                        onClick={() => setEditing(false)}
+                                        className="btn btn-primary btn-outline"
+                                        disabled={isSubmitting}>
+                                        Cancel
+                                    </button>
+                                    <button type="submit" className={cx('btn btn-success', { loading: isSubmitting })}>
+                                        Save
+                                    </button>
                                 </span>
                             ) : (
-                                <button onClick={() => setEditing(true)}>Edit</button>
+                                <button onClick={() => setEditing(true)} className="btn btn-primary">
+                                    Edit
+                                </button>
                             )}
                         </div>
 
@@ -60,20 +77,34 @@ const UserForm: FC<UserFormProps> = ({ user }) => {
                             alt="user_image"
                             width={100}
                             height={100}
-                            className="rounded-[50%]"
+                            className="mask mask-squircle"
                         />
 
-                        <span className="flex flex-col">
-                            <label htmlFor="name">Name</label>
-                            <Field id="name" name="name" disabled={!isEditing} />
+                        <span className="flex flex-col form-control">
+                            <label htmlFor="name" className="label">
+                                Name
+                            </label>
+                            <Field id="name" name="name" disabled={!isEditing} className="input" />
                             <ErrorMessage name="name" />
                         </span>
 
-                        <span className="flex flex-col">
-                            <label htmlFor="email">Email</label>
-                            <Field id="email" name="email" disabled={!isEditing} />
+                        <span className="flex flex-col form-control">
+                            <label htmlFor="email" className="label">
+                                Email
+                            </label>
+                            <Field id="email" name="email" disabled={!isEditing} className="input" />
                             <ErrorMessage name="email" />
                         </span>
+
+                        {hasSubmitted && (
+                            <div className="toast">
+                                <div className="alert alert-success">
+                                    <div>
+                                        <span>Account updated.</span>
+                                    </div>
+                                </div>
+                            </div>
+                        )}
                     </Form>
                 );
             }}
