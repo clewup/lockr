@@ -1,4 +1,4 @@
-import { User as PrismaUser, Role } from '@prisma/client';
+import { User as PrismaUser, Role, UserApplication } from '@prisma/client';
 
 declare module 'next-auth' {
     interface User extends PrismaUser {
@@ -12,6 +12,6 @@ declare module 'next-auth' {
 
     interface Session {
         user: User;
-        applicationAccess: Record<number, Date>;
+        applications: UserApplication[];
     }
 }

@@ -12,30 +12,21 @@ export const authOptions: NextAuthOptions = {
     callbacks: {
         async session({ session, user, trigger, newSession }) {
             // if the update function is called with a user
-            // update the database
-            // refresh/update the session
+            // update the database and the session user
             if (trigger === 'update' && newSession.user) {
                 session.user = newSession.user;
                 await adapter.updateUser(newSession.user);
             }
 
-            // fetch the user's application access history and reduce it to key value pairs
-            const applicationAccess = await prisma.authorizationCode.findMany({
-                select: { applicationId: true, updatedAt: true },
+            // fetch the user's applications
+            const userApplications = await prisma.userApplication.findMany({
                 where: { userId: user.id },
             });
-            const reducedApplicationAccess = applicationAccess.reduce(
-                (acc: Record<number, Date>, { applicationId, updatedAt }) => {
-                    acc[applicationId] = updatedAt;
-                    return acc;
-                },
-                {}
-            );
 
             return {
                 ...session,
                 user: user,
-                applicationAccess: reducedApplicationAccess,
+                applications: userApplications,
             };
         },
     },

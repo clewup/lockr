@@ -37,10 +37,7 @@ export async function POST(request: Request) {
         include: { user: true },
         where: {
             code: code,
-            userId_applicationId: {
-                userId: userId,
-                applicationId: applicationId,
-            },
+            userId: userId,
         },
     });
     if (!validCode) {

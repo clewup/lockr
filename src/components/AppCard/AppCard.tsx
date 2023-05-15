@@ -16,6 +16,8 @@ const AppCard: FC<AppCardProps> = ({ app }) => {
     const [isLoading, setLoading] = useState(false);
     const { data: session, update: updateSession } = useSession();
 
+    const userApplication = session?.applications.find((application) => application.applicationId === app.id);
+
     async function navigateToApp() {
         setLoading(true);
         const codeResponse = await fetch('/api/auth/code', {
@@ -24,6 +26,12 @@ const AppCard: FC<AppCardProps> = ({ app }) => {
         });
         const codeData = await codeResponse.json();
         const code = codeData.authorization_code;
+
+        await fetch('/api/application', {
+            method: 'PATCH',
+            body: JSON.stringify({ id: app.id, isFavourited: false }),
+        });
+
         await updateSession();
         setLoading(false);
 
@@ -51,8 +59,8 @@ const AppCard: FC<AppCardProps> = ({ app }) => {
                 <>
                     <div className="card-body">
                         <h1 className="card-title text-4xl">{app.name}</h1>
-                        {session?.applicationAccess[app.id] && (
-                            <p>Last accessed: {moment(session?.applicationAccess[app.id]).format('DD/MM/yyyy')}</p>
+                        {userApplication && (
+                            <p>Last accessed: {moment(userApplication.lastAccessed).format('DD/MM/yyyy')}</p>
                         )}
                     </div>
 
