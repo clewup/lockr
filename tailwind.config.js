@@ -15,6 +15,9 @@ module.exports = {
             minHeight: {
                 'screen-header': '90vh',
             },
+            width: {
+                'screen-side-menu': '85vw',
+            },
         },
     },
     plugins: [require('@tailwindcss/typography'), require('daisyui')],

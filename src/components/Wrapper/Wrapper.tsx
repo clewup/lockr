@@ -33,7 +33,7 @@ const Wrapper: FC<WrapperProps> = ({ children }) => {
             }}
             initial="hidden"
             animate="visible"
-            className="w-[85vw] px-5">
+            className="w-screen-side-menu px-5">
             {children}
         </m.main>
     );
