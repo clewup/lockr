@@ -23,7 +23,7 @@ export async function PATCH(request: Request) {
         return response.json({}, { status: 400, statusText: 'Invalid isFavourited' });
 
     // upsert the user's application in the database
-    const application = await prisma.userApplication.upsert({
+    const userApp = await prisma.userApplication.upsert({
         where: {
             applicationId_userId: {
                 applicationId: id,
@@ -50,5 +50,12 @@ export async function PATCH(request: Request) {
         },
     });
 
-    return response.json(application, { status: 201 });
+    return response.json(
+        {
+            id: userApp.applicationId,
+            lastAccessed: userApp.lastAccessed,
+            isFavourited: userApp.isFavourited,
+        },
+        { status: 201 }
+    );
 }

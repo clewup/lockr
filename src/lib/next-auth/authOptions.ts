@@ -1,4 +1,5 @@
 import { prisma } from '@/lib/prisma/prisma';
+import { UserAppType } from '@/types/appTypes';
 import { PrismaAdapter } from '@next-auth/prisma-adapter';
 import { NextAuthOptions } from 'next-auth';
 import GoogleProvider from 'next-auth/providers/google';
@@ -18,15 +19,20 @@ export const authOptions: NextAuthOptions = {
                 await adapter.updateUser(newSession.user);
             }
 
-            // fetch the user's applications
-            const userApplications = await prisma.userApplication.findMany({
+            // fetch and reduce the user's applications
+            const userApps = await prisma.userApplication.findMany({
                 where: { userId: user.id },
             });
+            const reducedApplications: UserAppType[] = userApps.map((application) => ({
+                id: application.applicationId,
+                lastAccessed: application.lastAccessed,
+                isFavourited: application.isFavourited,
+            }));
 
             return {
                 ...session,
                 user: user,
-                applications: userApplications,
+                applications: reducedApplications,
             };
         },
     },

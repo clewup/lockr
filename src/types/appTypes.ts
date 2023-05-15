@@ -1,15 +1,15 @@
 import { ForwardRefExoticComponent, RefAttributes, SVGProps } from 'react';
 
 export type AppType = {
+    id: number;
     name: string;
     url: string;
-    icon: IconType;
-    isDisabled: boolean;
+    logo: string;
+    isEnabled: boolean;
 };
 
-type IconType = ForwardRefExoticComponent<
-    Omit<SVGProps<SVGSVGElement>, 'ref'> & {
-        title?: string | undefined;
-        titleId?: string | undefined;
-    } & RefAttributes<SVGSVGElement>
->;
+export type UserAppType = {
+    id: number;
+    lastAccessed: Date | null;
+    isFavourited: boolean;
+};
