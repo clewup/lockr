@@ -6,6 +6,7 @@ import { useSession } from 'next-auth/react';
 import { FC, useState } from 'react';
 import cx from 'classnames';
 import { SyncLoader } from 'react-spinners';
+import { motion as m } from 'framer-motion';
 
 interface AppCardProps {
     app: Application;
@@ -31,7 +32,13 @@ const AppCard: FC<AppCardProps> = ({ app }) => {
     }
 
     return (
-        <div
+        <m.div
+            variants={{
+                hover: {
+                    rotate: -3,
+                },
+            }}
+            whileHover="hover"
             className={cx('card relative cursor-pointer w-52 h-52 shadow-xl', {
                 'opacity-70 pointer-events-none': !app.isEnabled,
             })}
@@ -56,7 +63,7 @@ const AppCard: FC<AppCardProps> = ({ app }) => {
                     </div>
                 </>
             )}
-        </div>
+        </m.div>
     );
 };
 
