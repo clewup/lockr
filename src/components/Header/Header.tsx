@@ -6,6 +6,7 @@ import { signOut, useSession } from 'next-auth/react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
+import { motion as m } from 'framer-motion';
 
 const Header = () => {
     const router = useRouter();
@@ -22,7 +23,14 @@ const Header = () => {
                 <Logo className="fill-neutral" />
                 <h1 className="text-4xl font-roboto font-bold text-primary">Lockr</h1>
             </Link>
-            <div className="flex gap-5">
+            <m.div
+                variants={{
+                    hidden: { y: -50, opacity: 0 },
+                    visible: { y: 0, opacity: 1 },
+                }}
+                initial="hidden"
+                animate="visible"
+                className="flex gap-5">
                 <span className="flex flex-col justify-center">
                     <p>{session?.user?.email}</p>
                     <p onClick={() => signOut()} className="link link-hover link-primary">
@@ -43,7 +51,7 @@ const Header = () => {
                 ) : (
                     <Avvvatars value={session.user.email} size={50} />
                 )}
-            </div>
+            </m.div>
         </div>
     );
 };
