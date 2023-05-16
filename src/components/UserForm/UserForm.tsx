@@ -1,5 +1,6 @@
 'use client';
 
+import Avvvatars from 'avvvatars-react';
 import { User } from 'next-auth';
 import { ErrorMessage, Field, Form, Formik, FormikValues } from 'formik';
 import { useSession } from 'next-auth/react';
@@ -48,7 +49,7 @@ const UserForm: FC<UserFormProps> = ({ user }) => {
 
     return (
         <Formik initialValues={initialValues} onSubmit={onSubmit} validationSchema={validationSchema}>
-            {({ isSubmitting }) => {
+            {({ isSubmitting, errors }) => {
                 return (
                     <Form className="flex flex-col gap-5 shadow-xl p-5 rounded-2xl">
                         <div className="flex gap-20 items-center    ">
@@ -72,28 +73,46 @@ const UserForm: FC<UserFormProps> = ({ user }) => {
                             )}
                         </div>
 
-                        <Image
-                            src={user.image || ''}
-                            alt="user_image"
-                            width={100}
-                            height={100}
-                            className="mask mask-squircle"
-                        />
+                        {user.image ? (
+                            <Image
+                                src={user.image || ''}
+                                alt="user_image"
+                                width={100}
+                                height={100}
+                                className="mask mask-squircle"
+                            />
+                        ) : (
+                            <Avvvatars value={user.email} size={100} />
+                        )}
 
                         <span className="flex flex-col form-control">
                             <label htmlFor="name" className="label">
                                 Name
                             </label>
-                            <Field id="name" name="name" disabled={!isEditing} className="input" />
-                            <ErrorMessage name="name" />
+                            <Field
+                                id="name"
+                                name="name"
+                                disabled={!isEditing}
+                                className={cx('input', { 'input-error': errors.name })}
+                            />
+                            <span className="text-error">
+                                <ErrorMessage name="name" />
+                            </span>
                         </span>
 
                         <span className="flex flex-col form-control">
                             <label htmlFor="email" className="label">
                                 Email
                             </label>
-                            <Field id="email" name="email" disabled={!isEditing} className="input" />
-                            <ErrorMessage name="email" />
+                            <Field
+                                id="email"
+                                name="email"
+                                disabled={!isEditing}
+                                className={cx('input', { 'input-error': errors.email })}
+                            />
+                            <span className="text-error">
+                                <ErrorMessage name="email" />
+                            </span>
                         </span>
 
                         {hasSubmitted && (
