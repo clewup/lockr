@@ -49,7 +49,7 @@ const UserForm: FC<UserFormProps> = ({ user }) => {
 
     return (
         <Formik initialValues={initialValues} onSubmit={onSubmit} validationSchema={validationSchema}>
-            {({ isSubmitting, errors }) => {
+            {({ isSubmitting, errors, resetForm }) => {
                 return (
                     <Form className="flex flex-col gap-5 shadow-xl p-5 rounded-2xl">
                         <div className="flex gap-20 items-center    ">
@@ -57,7 +57,10 @@ const UserForm: FC<UserFormProps> = ({ user }) => {
                             {isEditing ? (
                                 <span className="flex gap-5">
                                     <button
-                                        onClick={() => setEditing(false)}
+                                        onClick={() => {
+                                            resetForm();
+                                            setEditing(false);
+                                        }}
                                         className="btn btn-primary btn-outline"
                                         disabled={isSubmitting}>
                                         Cancel
