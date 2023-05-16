@@ -5,10 +5,10 @@ import constants from '@/constants/constants';
 import useAuthorizationCode from '@/hooks/useAuthorizationCode/useAuthorizationCode';
 import { ErrorMessage, Field, Form, Formik, FormikValues } from 'formik';
 import { signIn, useSession } from 'next-auth/react';
-import { redirect } from 'next/navigation';
+import { redirect, useSearchParams } from 'next/navigation';
 import { useEffect } from 'react';
 import { motion as m } from 'framer-motion';
-import { ArrowRightOnRectangleIcon } from '@heroicons/react/24/outline';
+import { ArrowRightOnRectangleIcon, EnvelopeOpenIcon } from '@heroicons/react/24/outline';
 import { SocialIcon } from 'react-social-icons';
 import * as yup from 'yup';
 import cx from 'classnames';
@@ -16,6 +16,8 @@ import cx from 'classnames';
 export default function Login() {
     const { data: session } = useSession();
     const { isLoading } = useAuthorizationCode({ isAuthed: false });
+    const searchParams = useSearchParams();
+    const verifySearchParam = searchParams.get('verify');
 
     useEffect(() => {
         if (session && !isLoading) {
@@ -89,6 +91,18 @@ export default function Login() {
                         );
                     }}
                 </Formik>
+            </div>
+
+            <input type="checkbox" id="my-modal" className="modal-toggle" checked={!!verifySearchParam} />
+            <div className="modal">
+                <div className="modal-box flex flex-col text-center">
+                    <h3 className="font-bold text-4xl">Check your emails!</h3>
+
+                    <span className="py-5 text-xl flex flex-col items-center gap-2">
+                        <EnvelopeOpenIcon height={50} width={50} className="text-primary" />
+                        <p>A link that you can use to login has been sent to your email address.</p>
+                    </span>
+                </div>
             </div>
         </main>
     );

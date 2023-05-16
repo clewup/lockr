@@ -50,4 +50,10 @@ export const authOptions: NextAuthOptions = {
             };
         },
     },
+    pages: {
+        signIn: '/login',
+        verifyRequest: '/login?verify=true',
+        error: '/error',
+        signOut: '/login',
+    },
 };
