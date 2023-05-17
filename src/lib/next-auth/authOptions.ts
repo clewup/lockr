@@ -14,14 +14,14 @@ export const authOptions: NextAuthOptions = {
         GoogleProvider({ clientId: constants.GOOGLE_CLIENT_ID, clientSecret: constants.GOOGLE_CLIENT_SECRET }),
         EmailProvider({
             server: {
-                host: process.env.SENDGRID_SERVER,
-                port: process.env.SENDGRID_PORT,
+                host: constants.SENDGRID_SERVER,
+                port: constants.SENDGRID_PORT,
                 auth: {
-                    user: process.env.SENDGRID_USERNAME,
-                    pass: process.env.SENDGRID_PASSWORD,
+                    user: constants.SENDGRID_USERNAME,
+                    pass: constants.SENDGRID_PASSWORD,
                 },
             },
-            from: process.env.EMAIL_FROM,
+            from: constants.EMAIL_FROM,
             sendVerificationRequest({ identifier, url, provider, theme }) {
                 VerificationEmailRequest({ identifier, url, provider, theme });
             },
