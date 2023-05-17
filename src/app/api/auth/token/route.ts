@@ -33,7 +33,7 @@ export async function POST(request: Request) {
 
     // query the database for a matching authorization code
     // verify that the queried entity exists
-    const validCode = await prisma.authorizationCode.findUnique({
+    const validCode = await prisma.authorizationCode.findFirst({
         include: { user: true },
         where: {
             code: code,
