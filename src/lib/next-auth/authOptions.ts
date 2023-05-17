@@ -1,3 +1,4 @@
+import { VerificationEmailRequest } from '@/lib/next-auth/verificationEmail';
 import { prisma } from '@/lib/prisma/prisma';
 import { UserAppType } from '@/types/appTypes';
 import { PrismaAdapter } from '@next-auth/prisma-adapter';
@@ -21,6 +22,9 @@ export const authOptions: NextAuthOptions = {
                 },
             },
             from: process.env.EMAIL_FROM,
+            sendVerificationRequest({ identifier, url, provider, theme }) {
+                VerificationEmailRequest({ identifier, url, provider, theme });
+            },
         }),
     ],
     adapter: adapter,
