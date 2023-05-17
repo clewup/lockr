@@ -45,7 +45,7 @@ export async function POST(request: Request) {
         );
     }
     // verify that the code has not expired
-    if (moment(expiry).isAfter(moment())) {
+    if (moment(expiry).utc().isAfter(moment())) {
         return response.json(
             { error: 'Expired authorization_code', code: TokenErrorCodes.PASSED_CODE_EXPIRED },
             { status: 400, statusText: 'Expired authorization_code' }
@@ -68,7 +68,7 @@ export async function POST(request: Request) {
         );
     }
     // verify that the validated code has not expired
-    if (moment(validCode.expires).isAfter(moment())) {
+    if (moment(validCode.expires).utc().isAfter(moment())) {
         return response.json(
             { error: 'Expired authorization_code', code: TokenErrorCodes.VALID_CODE_EXPIRED },
             { status: 400, statusText: 'Expired authorization_code' }

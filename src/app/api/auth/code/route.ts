@@ -35,7 +35,7 @@ export async function POST(request: Request) {
             application_id: applicationId,
         };
 
-        return jwt.sign(payload, constants.SECRET, { expiresIn: moment().add(5, 'minutes').unix() });
+        return jwt.sign(payload, constants.SECRET, { expiresIn: moment().add(5, 'minutes').utc().unix() });
     }
     const code = createAuthorizationCode(session);
 
@@ -47,7 +47,7 @@ export async function POST(request: Request) {
         update: { code: code, expires: moment().add(5, 'minutes').utc().toDate() },
         create: {
             code: code,
-            expires: moment().add(5, 'minutes').toDate(),
+            expires: moment().add(5, 'minutes').utc().toDate(),
             user: {
                 connect: {
                     id: user.id,
