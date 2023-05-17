@@ -45,7 +45,7 @@ export async function POST(request: Request) {
         );
     }
     // verify that the code has not expired
-    if (moment(expiry).utc().isAfter(moment().utc())) {
+    if (moment.unix(expiry).isBefore(moment())) {
         return response.json(
             { error: 'Expired authorization_code', code: TokenErrorCodes.PASSED_CODE_EXPIRED },
             { status: 400, statusText: 'Expired authorization_code' }
@@ -68,7 +68,7 @@ export async function POST(request: Request) {
         );
     }
     // verify that the validated code has not expired
-    if (moment(validCode.expires).utc().isAfter(moment().utc())) {
+    if (moment(validCode.expires).isBefore(moment())) {
         return response.json(
             { error: 'Expired authorization_code', code: TokenErrorCodes.VALID_CODE_EXPIRED },
             { status: 400, statusText: 'Expired authorization_code' }
@@ -81,7 +81,7 @@ export async function POST(request: Request) {
             ...user,
         };
 
-        return jwt.sign(payload, constants.SECRET, { expiresIn: moment().utc().add(2, 'hours').unix() });
+        return jwt.sign(payload, constants.SECRET, { expiresIn: 60 * 5 });
     }
     const accessToken = createAccessToken(validCode.user);
 
