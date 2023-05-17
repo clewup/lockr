@@ -81,7 +81,7 @@ export async function POST(request: Request) {
             ...user,
         };
 
-        return jwt.sign(payload, constants.SECRET, { expiresIn: moment().add(2, 'hours').unix() });
+        return jwt.sign(payload, constants.SECRET, { expiresIn: moment().utc().add(2, 'hours').unix() });
     }
     const accessToken = createAccessToken(validCode.user);
 
