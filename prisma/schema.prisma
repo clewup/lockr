@@ -88,6 +88,7 @@ model Application {
   createdAt       DateTime          @default(now())
   updatedAt       DateTime          @updatedAt
   UserApplication UserApplication[]
+  secret          String
 }
 
 model UserApplication {
