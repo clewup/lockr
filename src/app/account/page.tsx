@@ -1,10 +1,12 @@
 import UserForm from '@/components/UserForm/UserForm';
 import PageWrapper from '@/components/PageWrapper/PageWrapper';
-import constants from '@/constants/constants';
 import { getSession } from '@/utils/functions';
-import { Session } from 'next-auth';
 import { headers } from 'next/headers';
 import { redirect } from 'next/navigation';
+
+export const metadata = {
+    title: 'Lockr - Account',
+};
 
 export default async function Account() {
     const session = await getSession(headers().get('cookie') ?? '');
