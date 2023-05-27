@@ -10,11 +10,11 @@ import { motion as m } from 'framer-motion';
 import { StarIcon as StarOutlineIcon, ArrowRightOnRectangleIcon } from '@heroicons/react/24/outline';
 import { StarIcon as StarSolidIcon } from '@heroicons/react/24/solid';
 
-interface AppCardProps {
+interface ApplicationProps {
     app: AppType;
 }
 
-const AppCard: FC<AppCardProps> = ({ app }) => {
+const Application: FC<ApplicationProps> = ({ app }) => {
     const { data: session, update: updateSession } = useSession();
 
     const userApp = session?.applications.find((userApp) => userApp.id === app.id);
@@ -55,7 +55,7 @@ const AppCard: FC<AppCardProps> = ({ app }) => {
 
     return (
         <m.div
-            className={cx('card cursor-pointer w-52 h-52 shadow-xl z-10', {
+            className={cx('card cursor-pointer shadow-xl z-10', {
                 'opacity-70 pointer-events-none': !app.isEnabled,
             })}>
             {isLoading ? (
@@ -119,4 +119,4 @@ const AppCard: FC<AppCardProps> = ({ app }) => {
     );
 };
 
-export default AppCard;
+export default Application;

@@ -52,8 +52,8 @@ const UserForm: FC<UserFormProps> = ({ user }) => {
             {({ isSubmitting, errors, resetForm }) => {
                 return (
                     <Form className="flex flex-col gap-5 shadow-xl p-5 rounded-2xl">
-                        <div className="flex gap-20 items-center    ">
-                            <h1 className="text-4xl font-semibold">User Details</h1>
+                        <div className="flex flex-col gap-5 items-center md:flex-row md:gap-20">
+                            <h1 className="text-2xl font-semibold md:text-4xl">User Details</h1>
                             {isEditing ? (
                                 <span className="flex gap-5">
                                     <button
@@ -76,17 +76,19 @@ const UserForm: FC<UserFormProps> = ({ user }) => {
                             )}
                         </div>
 
-                        {user.image ? (
-                            <Image
-                                src={user.image || ''}
-                                alt="user_image"
-                                width={100}
-                                height={100}
-                                className="mask mask-squircle"
-                            />
-                        ) : (
-                            <Avvvatars value={user.email} size={100} />
-                        )}
+                        <div className="flex justify-center w-full md:justify-start">
+                            {user.image ? (
+                                <Image
+                                    src={user.image}
+                                    alt="user_image"
+                                    width={100}
+                                    height={100}
+                                    className="mask mask-squircle"
+                                />
+                            ) : (
+                                <Avvvatars value={user.email} size={100} />
+                            )}
+                        </div>
 
                         <span className="flex flex-col form-control">
                             <label htmlFor="name" className="label">

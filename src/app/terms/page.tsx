@@ -1,9 +1,9 @@
-import Wrapper from '@/components/Wrapper/Wrapper';
+import PageWrapper from '@/components/PageWrapper/PageWrapper';
 import metadata from '@/constants/metadata';
 
 export default function Terms() {
     return (
-        <Wrapper>
+        <PageWrapper>
             <div className="flex flex-col gap-10">
                 {metadata.policies.tos.map((term, index) => (
                     <div key={index}>
@@ -14,6 +14,6 @@ export default function Terms() {
                     </div>
                 ))}
             </div>
-        </Wrapper>
+        </PageWrapper>
     );
 }

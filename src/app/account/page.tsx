@@ -1,5 +1,5 @@
 import UserForm from '@/components/UserForm/UserForm';
-import Wrapper from '@/components/Wrapper/Wrapper';
+import PageWrapper from '@/components/PageWrapper/PageWrapper';
 import constants from '@/constants/constants';
 import { getSession } from '@/utils/functions';
 import { Session } from 'next-auth';
@@ -15,8 +15,8 @@ export default async function Account() {
     }
 
     return (
-        <Wrapper>
+        <PageWrapper>
             <UserForm user={session.user} />
-        </Wrapper>
+        </PageWrapper>
     );
 }

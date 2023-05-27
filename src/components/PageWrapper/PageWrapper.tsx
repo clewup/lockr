@@ -6,11 +6,11 @@ import { redirect } from 'next/navigation';
 import { FC, ReactNode } from 'react';
 import { motion as m } from 'framer-motion';
 
-interface WrapperProps {
+interface PageWrapperProps {
     children: ReactNode;
 }
 
-const Wrapper: FC<WrapperProps> = ({ children }) => {
+const PageWrapper: FC<PageWrapperProps> = ({ children }) => {
     const { data: session } = useSession();
     const { isLoading } = useAuthorizationCode({ isAuthed: true });
 
@@ -33,10 +33,10 @@ const Wrapper: FC<WrapperProps> = ({ children }) => {
             }}
             initial="hidden"
             animate="visible"
-            className="w-screen-side-menu px-5">
+            className="md:w-screen-side-menu px-5">
             {children}
         </m.main>
     );
 };
 
-export default Wrapper;
+export default PageWrapper;

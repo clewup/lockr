@@ -20,8 +20,7 @@ const Header = () => {
     return (
         <div className="w-screen flex justify-between px-5 items-center h-[10vh]">
             <Link href={'/'} className="flex items-center gap-2">
-                <Logo className="fill-neutral" />
-                <h1 className="text-4xl font-roboto font-bold text-primary">Lockr</h1>
+                <Logo className="fill-primary" />
             </Link>
             <m.div
                 variants={{
