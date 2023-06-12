@@ -19,7 +19,7 @@ const SideMenu = () => {
     ];
 
     return (
-        <div className="px-5 md:w-[15vw] ">
+        <div className="p-5 md:w-[15vw] bg-base-200">
             <ul className="menu">
                 {menuItems.map((menuItem, index) => {
                     return (

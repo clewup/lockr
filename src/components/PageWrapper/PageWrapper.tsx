@@ -33,7 +33,7 @@ const PageWrapper: FC<PageWrapperProps> = ({ children }) => {
             }}
             initial="hidden"
             animate="visible"
-            className="md:w-screen-side-menu px-5">
+            className="md:w-screen-side-menu p-5">
             {children}
         </m.main>
     );

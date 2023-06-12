@@ -18,9 +18,9 @@ const Header = () => {
     }
 
     return (
-        <div className="w-screen flex justify-between px-5 items-center h-[10vh]">
+        <div className="w-screen flex justify-between px-5 items-center h-[10vh] bg-primary">
             <Link href={'/'} className="flex items-center gap-2">
-                <Logo className="fill-primary" />
+                <Logo className="fill-base-100" />
             </Link>
             <m.div
                 variants={{
@@ -31,8 +31,8 @@ const Header = () => {
                 animate="visible"
                 className="flex gap-5">
                 <span className="flex flex-col justify-center">
-                    <p>{session?.user?.email}</p>
-                    <p onClick={() => signOut()} className="link link-hover link-primary">
+                    <p className="text-base-100 font-bold">{session?.user?.email}</p>
+                    <p onClick={() => signOut()} className="link link-hover text-base-100">
                         Sign Out
                     </p>
                 </span>
