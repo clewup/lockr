@@ -1,5 +1,6 @@
 'use client';
 
+import useApi from '@/lib/common/hooks/useApi/useApi';
 import { deleteCookie, getCookie, setCookie } from 'cookies-next';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
@@ -11,6 +12,7 @@ interface UseAuthorizationCodeProps {
 const useAuthorizationCode = ({ isAuthed = false }: UseAuthorizationCodeProps) => {
     const router = useRouter();
     const searchParams = useSearchParams();
+    const { post } = useApi();
 
     const [isLoading, setLoading] = useState(false);
 
@@ -46,18 +48,10 @@ const useAuthorizationCode = ({ isAuthed = false }: UseAuthorizationCodeProps) =
 
         if (redirectUri && typeof redirectUri === 'string' && applicationId && typeof applicationId === 'string') {
             setLoading(true);
-            const codeResponse = await fetch('/api/auth/code', {
-                method: 'POST',
-                body: JSON.stringify({ application_id: applicationId }),
+
+            const { authorization_code: code } = await post<{ authorization_code: string }>('/api/auth/code', {
+                application_id: applicationId,
             });
-
-            if (!codeResponse.ok) {
-                setLoading(false);
-                throw new Error('An error occurred whilst authenticating.');
-            }
-
-            const codeData = await codeResponse.json();
-            const code = codeData.authorization_code;
 
             if (code) {
                 router.push(`${redirectUri}?code=${code}`);

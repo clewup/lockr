@@ -1,10 +1,10 @@
 import './globals.css';
-import CookieBanner from '@/components/CookieBanner/CookieBanner';
 import Footer from '@/components/Footer/Footer';
 import Header from '@/components/Header/Header';
 import SideMenu from '@/components/SideMenu/SideMenu';
 import { AuthProvider } from '@/contexts/AuthContext/AuthContext';
 import { UserProvider } from '@/contexts/UserContext/UserContext';
+import CookiePopup from '@/lib/common/components/CookiePopup/CookiePopup';
 import { getSession } from '@/utils/functions';
 import { headers } from 'next/headers';
 import React, { ReactNode } from 'react';
@@ -29,7 +29,7 @@ export default async function RootLayout({ children }: { children: ReactNode }) 
                                     <SideMenu />
                                     {children}
                                 </div>
-                                <CookieBanner />
+                                <CookiePopup />
                                 <Footer />
                             </>
                         ) : (

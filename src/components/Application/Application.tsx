@@ -1,5 +1,6 @@
 'use client';
 
+import useApi from '@/lib/common/hooks/useApi/useApi';
 import { AppType } from '@/types/appTypes';
 import moment from 'moment';
 import { useSession } from 'next-auth/react';
@@ -16,6 +17,7 @@ interface ApplicationProps {
 
 const Application: FC<ApplicationProps> = ({ app }) => {
     const { data: session, update: updateSession } = useSession();
+    const { patch, post } = useApi();
 
     const userApp = session?.applications.find((userApp) => userApp.id === app.id);
 
@@ -25,26 +27,17 @@ const Application: FC<ApplicationProps> = ({ app }) => {
 
     async function upsertUserApplication(isFavourited: boolean) {
         setSubmitting(true);
-        await fetch('/api/application', {
-            method: 'PATCH',
-            body: JSON.stringify({ id: app.id, isFavourited: isFavourited }),
-        });
+        await patch('/api/application', { id: app.id, isFavourited: isFavourited });
         setSubmitting(false);
     }
 
     async function navigateToApp() {
         setLoading(true);
-        const codeResponse = await fetch('/api/auth/code', {
-            method: 'POST',
-            body: JSON.stringify({ application_id: app.id }),
-        });
-        const codeData = await codeResponse.json();
-        const code = codeData.authorization_code;
 
-        await fetch('/api/application', {
-            method: 'PATCH',
-            body: JSON.stringify({ id: app.id, isFavourited: isFavourited }),
+        const { authorization_code: code } = await post<{ authorization_code: string }>('/api/auth/code', {
+            application_id: app.id,
         });
+        await patch('/api/application', { id: app.id, isFavourited: isFavourited });
         await updateSession();
 
         setLoading(false);

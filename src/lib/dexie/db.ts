@@ -3,7 +3,6 @@ import DexieBase, { Table } from 'dexie';
 
 export type CookieConsent = {
     id?: number;
-    isConsenting: boolean;
 };
 
 export enum DexieTables {
@@ -19,7 +18,7 @@ export class Dexie extends DexieBase {
         super('lockr');
 
         this.version(1).stores({
-            cookieConsent: '++id, isConsenting',
+            cookieConsent: '++id',
         });
 
         this.services = new DexieServices(this);
