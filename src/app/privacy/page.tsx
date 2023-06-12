@@ -5,6 +5,7 @@ export default function Privacy() {
     return (
         <PageWrapper>
             <div className="flex flex-col gap-10">
+                <h1 className="text-5xl">Privacy Policy</h1>
                 {metadata.policies.privacy.map((policy, index) => (
                     <div key={index}>
                         <h1 className="text-2xl font-bold">
