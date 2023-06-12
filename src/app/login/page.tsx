@@ -55,8 +55,8 @@ export default function Login() {
                     animate="visible"
                     className="mb-10">
                     <span className="flex gap-2 items-center">
-                        <Logo width={40} height={40} className="fill-neutral" />
-                        <h1 className="text-5xl font-roboto text-primary font-bold">Lockr</h1>
+                        <Logo width={40} height={40} className="fill-primary" />
+                        <h1 className="text-5xl font-roboto text-neutral font-bold">Lockr</h1>
                     </span>
                 </m.span>
 
