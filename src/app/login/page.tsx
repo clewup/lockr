@@ -1,6 +1,5 @@
 'use client';
 
-import Logo from '@/components/Logo/Logo';
 import constants from '@/constants/constants';
 import useAuthorizationCode from '@/hooks/useAuthorizationCode/useAuthorizationCode';
 import { ErrorMessage, Field, Form, Formik, FormikValues } from 'formik';
@@ -46,7 +45,7 @@ export default function Login() {
 
     return (
         <main className="h-screen flex justify-center items-center">
-            <div className="w-1/3 shadow-xl rounded-2xl p-10 flex flex-col justify-center items-center">
+            <div className="w-1/3 rounded-md bg-white p-10 flex flex-col justify-center items-center">
                 <m.span
                     variants={{
                         hidden: { y: -25, opacity: 0 },
@@ -76,7 +75,7 @@ export default function Login() {
                                         name="email"
                                         type="email"
                                         placeholder="Email"
-                                        className={cx('input shadow-xl', { 'input-error': errors.email })}
+                                        className={cx('input', { 'input-error': errors.email })}
                                     />
                                     <span className="text-error">
                                         <ErrorMessage name="email" />

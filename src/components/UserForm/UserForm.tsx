@@ -51,7 +51,7 @@ const UserForm: FC<UserFormProps> = ({ user }) => {
         <Formik initialValues={initialValues} onSubmit={onSubmit} validationSchema={validationSchema}>
             {({ isSubmitting, errors, resetForm }) => {
                 return (
-                    <Form className="flex flex-col gap-5 shadow-xl p-5 rounded-2xl">
+                    <Form className="flex flex-col gap-10 p-5">
                         <div className="flex flex-col gap-5 items-center md:flex-row md:gap-20">
                             <h1 className="text-2xl font-semibold md:text-4xl">User Details</h1>
                             {isEditing ? (
@@ -76,49 +76,53 @@ const UserForm: FC<UserFormProps> = ({ user }) => {
                             )}
                         </div>
 
-                        <div className="flex justify-center w-full md:justify-start">
-                            {user.image ? (
-                                <Image
-                                    src={user.image}
-                                    alt="user_image"
-                                    width={100}
-                                    height={100}
-                                    className="mask mask-squircle"
-                                />
-                            ) : (
-                                <Avvvatars value={user.email} size={100} />
-                            )}
+                        <div className="flex gap-10">
+                            <div className="w-1/5 flex justify-center md:justify-start">
+                                {user.image ? (
+                                    <Image
+                                        src={user.image}
+                                        alt="user_image"
+                                        width={100}
+                                        height={100}
+                                        className="mask mask-squircle w-full"
+                                    />
+                                ) : (
+                                    <Avvvatars value={user.email} size={100} />
+                                )}
+                            </div>
+
+                            <div className="w-full">
+                                <span className="flex flex-col form-control">
+                                    <label htmlFor="name" className="label">
+                                        Name
+                                    </label>
+                                    <Field
+                                        id="name"
+                                        name="name"
+                                        disabled={!isEditing}
+                                        className={cx('input', { 'input-error': errors.name })}
+                                    />
+                                    <span className="text-error">
+                                        <ErrorMessage name="name" />
+                                    </span>
+                                </span>
+
+                                <span className="flex flex-col form-control">
+                                    <label htmlFor="email" className="label">
+                                        Email
+                                    </label>
+                                    <Field
+                                        id="email"
+                                        name="email"
+                                        disabled={!isEditing}
+                                        className={cx('input', { 'input-error': errors.email })}
+                                    />
+                                    <span className="text-error">
+                                        <ErrorMessage name="email" />
+                                    </span>
+                                </span>
+                            </div>
                         </div>
-
-                        <span className="flex flex-col form-control">
-                            <label htmlFor="name" className="label">
-                                Name
-                            </label>
-                            <Field
-                                id="name"
-                                name="name"
-                                disabled={!isEditing}
-                                className={cx('input', { 'input-error': errors.name })}
-                            />
-                            <span className="text-error">
-                                <ErrorMessage name="name" />
-                            </span>
-                        </span>
-
-                        <span className="flex flex-col form-control">
-                            <label htmlFor="email" className="label">
-                                Email
-                            </label>
-                            <Field
-                                id="email"
-                                name="email"
-                                disabled={!isEditing}
-                                className={cx('input', { 'input-error': errors.email })}
-                            />
-                            <span className="text-error">
-                                <ErrorMessage name="email" />
-                            </span>
-                        </span>
 
                         {hasSubmitted && (
                             <div className="toast">

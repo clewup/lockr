@@ -1,6 +1,5 @@
 'use client';
 
-import Logo from '@/components/Logo/Logo';
 import Avvvatars from 'avvvatars-react';
 import { signOut, useSession } from 'next-auth/react';
 import Image from 'next/image';
@@ -18,16 +17,15 @@ const Header = () => {
     }
 
     return (
-        <div className="w-screen flex justify-between px-5 items-center h-[10vh] bg-primary">
+        <div className="flex justify-between px-5 items-center h-[8vh] bg-primary">
             <Link href={'/'} className="flex items-center gap-2">
-                <div className="relative h-full w-full">
-                    <Image
-                        src="https://res.cloudinary.com/dliog6kq6/image/upload/v1689286597/locker-dynamic-gradient_lle2ji.png"
-                        alt="logo"
-                        width={75}
-                        height={75}
-                    />
-                </div>
+                <Image
+                    src="https://res.cloudinary.com/dliog6kq6/image/upload/v1689286597/locker-dynamic-gradient_lle2ji.png"
+                    alt="logo"
+                    width={50}
+                    height={50}
+                />
+                <h1 className="text-white font-semibold text-4xl">lockr</h1>
             </Link>
             <m.div
                 variants={{
@@ -37,8 +35,8 @@ const Header = () => {
                 initial="hidden"
                 animate="visible"
                 className="flex gap-5">
-                <span className="flex flex-col justify-center">
-                    <p className="text-base-100 font-bold">{session?.user?.email}</p>
+                <span className="flex flex-col justify-center text-sm">
+                    <p className="text-base-100">{session?.user?.email}</p>
                     <p onClick={() => signOut()} className="link link-hover text-base-100">
                         Sign Out
                     </p>
@@ -49,8 +47,8 @@ const Header = () => {
                         <Image
                             src={session.user.image}
                             alt="user_image"
-                            width={50}
-                            height={50}
+                            width={35}
+                            height={35}
                             className="mask mask-squircle"
                         />
                     </span>

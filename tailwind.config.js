@@ -10,10 +10,10 @@ module.exports = {
         },
         extend: {
             height: {
-                'screen-header': '90vh',
+                'screen-header': '92vh',
             },
             minHeight: {
-                'screen-header': '90vh',
+                'screen-header': '92vh',
             },
             width: {
                 'screen-side-menu': '85vw',
@@ -29,7 +29,7 @@ module.exports = {
                     secondary: '#D926AA',
                     accent: '#1FB2A5',
                     neutral: '#CCCCCC',
-                    'base-100': '#FFF',
+                    'base-100': '#eeeeee',
                     info: '#3ABFF8',
                     success: '#198754',
                     warning: '#FBBD23',

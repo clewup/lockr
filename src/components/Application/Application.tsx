@@ -22,14 +22,6 @@ const Application: FC<ApplicationProps> = ({ app }) => {
     const userApp = session?.applications.find((userApp) => userApp.id === app.id);
 
     const [isLoading, setLoading] = useState(false);
-    const [isSubmitting, setSubmitting] = useState(false);
-    const [isFavourited, setFavourited] = useState(userApp?.isFavourited || false);
-
-    async function upsertUserApplication(isFavourited: boolean) {
-        setSubmitting(true);
-        await patch('/api/application', { id: app.id, isFavourited: isFavourited });
-        setSubmitting(false);
-    }
 
     async function navigateToApp() {
         setLoading(true);
@@ -37,7 +29,7 @@ const Application: FC<ApplicationProps> = ({ app }) => {
         const { authorization_code: code } = await post<{ authorization_code: string }>('/api/auth/code', {
             application_id: app.id,
         });
-        await patch('/api/application', { id: app.id, isFavourited: isFavourited });
+        await patch('/api/application', { id: app.id });
         await updateSession();
 
         setLoading(false);
@@ -48,7 +40,7 @@ const Application: FC<ApplicationProps> = ({ app }) => {
 
     return (
         <m.div
-            className={cx('card cursor-pointer shadow-xl z-10', {
+            className={cx('cursor-pointer w-full z-10 p-3 rounded-md flex flex-col justify-between', {
                 'opacity-70 pointer-events-none': !app.isEnabled,
             })}>
             {isLoading ? (
@@ -56,57 +48,19 @@ const Application: FC<ApplicationProps> = ({ app }) => {
                     <SyncLoader size={15} color="#111111" />
                 </div>
             ) : (
-                <>
-                    <div className="card-body">
-                        <h1 className="card-title text-4xl">{app.name}</h1>
-                        {userApp && <p>Last accessed: {moment(userApp.lastAccessed).format('DD/MM/yyyy')}</p>}
-                    </div>
+                <div className="flex flex-col gap-2">
+                    <div className="w-full aspect-square bg-primary rounded-md" onClick={navigateToApp}></div>
 
-                    <div className="card-actions justify-end p-2">
-                        {app.isEnabled ? (
-                            <>
-                                <m.button
-                                    variants={{
-                                        hover: { scale: 1.2, rotate: -5 },
-                                    }}
-                                    whileHover="hover"
-                                    onClick={navigateToApp}
-                                    disabled={isSubmitting}>
-                                    <ArrowRightOnRectangleIcon width={30} height={30} />
-                                </m.button>
-                                {isFavourited ? (
-                                    <m.button
-                                        variants={{
-                                            hover: { scale: 1.2, rotate: -5 },
-                                        }}
-                                        whileHover="hover"
-                                        onClick={() => {
-                                            setFavourited(false);
-                                            upsertUserApplication(false);
-                                        }}
-                                        disabled={isSubmitting}>
-                                        <StarSolidIcon width={30} height={30} className="text-yellow-400" />
-                                    </m.button>
-                                ) : (
-                                    <m.button
-                                        variants={{
-                                            hover: { scale: 1.2, rotate: -5 },
-                                        }}
-                                        whileHover="hover"
-                                        onClick={() => {
-                                            setFavourited(true);
-                                            upsertUserApplication(true);
-                                        }}
-                                        disabled={isSubmitting}>
-                                        <StarOutlineIcon width={30} height={30} className="text-yellow-400" />
-                                    </m.button>
-                                )}
-                            </>
-                        ) : (
-                            <span className="badge badge-lg badge-info badge-outline">Coming Soon!</span>
+                    <div className="text-center flex flex-col gap-2">
+                        <h1 className="text-2xl font-semibold">{app.name}</h1>
+
+                        {userApp && (
+                            <p className="text-base-300">
+                                Last accessed: {moment(userApp.lastAccessed).format('DD/MM/yyyy')}
+                            </p>
                         )}
                     </div>
-                </>
+                </div>
             )}
         </m.div>
     );

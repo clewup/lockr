@@ -98,7 +98,6 @@ model UserApplication {
   user          User        @relation(fields: [userId], references: [id])
   userId        String
   lastAccessed  DateTime?
-  isFavourited  Boolean     @default(false)
 
   @@unique([applicationId, userId])
 }

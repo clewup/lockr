@@ -11,16 +11,10 @@ export async function PATCH(request: Request) {
     if (!session || !user) return response.json({}, { status: 401 });
 
     // verify that id has been passed and is valid
-    const { id, isFavourited } = await request.json();
+    const { id } = await request.json();
     if (!id) return response.json({}, { status: 400, statusText: 'Missing id' });
     const validId = await prisma.application.findUnique({ where: { id: id } });
     if (typeof id !== 'number' || !validId) return response.json({}, { status: 400, statusText: 'Invalid id' });
-
-    // verify that isFavourited has been passed and is valid
-    if (typeof isFavourited === 'undefined')
-        return response.json({}, { status: 400, statusText: 'Missing isFavourited' });
-    if (typeof isFavourited !== 'boolean')
-        return response.json({}, { status: 400, statusText: 'Invalid isFavourited' });
 
     // upsert the user's application in the database
     const userApp = await prisma.userApplication.upsert({
@@ -32,7 +26,6 @@ export async function PATCH(request: Request) {
         },
         update: {
             lastAccessed: moment().toDate(),
-            isFavourited: isFavourited,
         },
         create: {
             application: {
@@ -46,7 +39,6 @@ export async function PATCH(request: Request) {
                 },
             },
             lastAccessed: moment().toDate(),
-            isFavourited: isFavourited,
         },
     });
 
@@ -54,7 +46,6 @@ export async function PATCH(request: Request) {
         {
             id: userApp.applicationId,
             lastAccessed: userApp.lastAccessed,
-            isFavourited: userApp.isFavourited,
         },
         { status: 201 }
     );

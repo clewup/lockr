@@ -25,7 +25,7 @@ export default async function Home() {
 
     return (
         <PageWrapper>
-            <div className="grid grid-cols-1 md:grid-cols-6">
+            <div className="grid grid-cols-1 gap-5 md:grid-cols-6 grid-flow-col">
                 {apps.map((app, index) => (
                     <Application key={index} app={app} />
                 ))}

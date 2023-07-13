@@ -9,7 +9,7 @@ const SideMenu = () => {
 
     const menuItems = [
         {
-            label: 'Apps',
+            label: 'Applications',
             path: '/',
         },
         {
@@ -19,7 +19,7 @@ const SideMenu = () => {
     ];
 
     return (
-        <div className="p-5 md:w-[15vw] bg-base-200">
+        <div className="p-5 md:w-[15vw] bg-white">
             <ul className="menu">
                 {menuItems.map((menuItem, index) => {
                     return (

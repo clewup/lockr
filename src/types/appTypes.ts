@@ -11,5 +11,4 @@ export type AppType = {
 export type UserAppType = {
     id: number;
     lastAccessed: Date | null;
-    isFavourited: boolean;
 };

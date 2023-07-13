@@ -25,7 +25,7 @@ export default async function RootLayout({ children }: { children: ReactNode }) 
                         {session ? (
                             <>
                                 <Header />
-                                <div className="flex flex-col min-h-screen-header md:flex-row">
+                                <div className="flex flex-col md:flex-row">
                                     <SideMenu />
                                     {children}
                                 </div>

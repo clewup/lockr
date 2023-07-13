@@ -44,7 +44,6 @@ export const authOptions: NextAuthOptions = {
             const reducedApplications: UserAppType[] = userApps.map((application) => ({
                 id: application.applicationId,
                 lastAccessed: application.lastAccessed,
-                isFavourited: application.isFavourited,
             }));
 
             return {
