@@ -5,6 +5,7 @@ import constants from '@/constants/constants';
 import useAuthorizationCode from '@/hooks/useAuthorizationCode/useAuthorizationCode';
 import { ErrorMessage, Field, Form, Formik, FormikValues } from 'formik';
 import { signIn, useSession } from 'next-auth/react';
+import Image from 'next/image';
 import { redirect, useSearchParams } from 'next/navigation';
 import { useEffect } from 'react';
 import { motion as m } from 'framer-motion';
@@ -55,8 +56,13 @@ export default function Login() {
                     animate="visible"
                     className="mb-10">
                     <span className="flex gap-2 items-center">
-                        <Logo width={40} height={40} className="fill-primary" />
-                        <h1 className="text-5xl font-roboto text-neutral font-bold">Lockr</h1>
+                        <Image
+                            src="https://res.cloudinary.com/dliog6kq6/image/upload/v1689286597/locker-dynamic-gradient_lle2ji.png"
+                            alt="logo"
+                            width={50}
+                            height={50}
+                        />
+                        <h1 className="text-5xl font-roboto font-bold">lockr</h1>
                     </span>
                 </m.span>
 

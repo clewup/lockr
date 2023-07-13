@@ -20,7 +20,14 @@ const Header = () => {
     return (
         <div className="w-screen flex justify-between px-5 items-center h-[10vh] bg-primary">
             <Link href={'/'} className="flex items-center gap-2">
-                <Logo className="fill-base-100" />
+                <div className="relative h-full w-full">
+                    <Image
+                        src="https://res.cloudinary.com/dliog6kq6/image/upload/v1689286597/locker-dynamic-gradient_lle2ji.png"
+                        alt="logo"
+                        width={75}
+                        height={75}
+                    />
+                </div>
             </Link>
             <m.div
                 variants={{

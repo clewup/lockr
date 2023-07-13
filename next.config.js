@@ -5,7 +5,7 @@ const nextConfig = {
         serverComponentsExternalPackages: ['@prisma/client'],
     },
     images: {
-        domains: ['lh3.googleusercontent.com'],
+        domains: ['lh3.googleusercontent.com', 'res.cloudinary.com'],
     },
     async headers() {
         return [
