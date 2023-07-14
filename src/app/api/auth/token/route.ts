@@ -1,4 +1,4 @@
-import { prisma } from '@/lib/prisma/prisma';
+import { authorizationCodeService } from '@/db/handler';
 import { User } from '@prisma/client';
 import moment from 'moment';
 import { NextResponse as response } from 'next/server';
@@ -14,8 +14,7 @@ export async function POST(request: Request) {
         NON_STRING = '002',
         NO_USER_ID = '003',
         PASSED_CODE_EXPIRED = '004',
-        NOT_EXISTS = '005',
-        VALID_CODE_EXPIRED = '006',
+        INVALID_CODE = '005',
     }
 
     // validate that a code has been passed in the body with the correct type
@@ -32,10 +31,9 @@ export async function POST(request: Request) {
         );
     }
 
-    const decodedToken = jwt.decode(code) as any;
-    const userId = decodedToken?.sub;
-    const applicationId = decodedToken.application_id;
-    const expiry = decodedToken?.exp;
+    const decodedCode = jwt.decode(code) as any;
+    const userId = decodedCode?.sub;
+    const expiry = decodedCode?.exp;
 
     // verify that the code, once decoded, contains the user's id
     if (!userId || typeof userId !== 'string') {
@@ -52,26 +50,11 @@ export async function POST(request: Request) {
         );
     }
 
-    // query the database for a matching authorization code
-    // verify that the queried entity exists
-    const validCode = await prisma.authorizationCode.findFirst({
-        include: { user: true },
-        where: {
-            code: code,
-            userId: userId,
-        },
-    });
-    if (!validCode) {
+    const authorizationCode = await authorizationCodeService.getAuthorizationCode(code, userId);
+    if (!authorizationCode) {
         return response.json(
-            { error: 'Invalid authorization_code', code: TokenErrorCodes.NOT_EXISTS },
+            { error: 'Invalid authorization_code', code: TokenErrorCodes.INVALID_CODE },
             { status: 400, statusText: 'Invalid authorization_code' }
-        );
-    }
-    // verify that the validated code has not expired
-    if (moment(validCode.expires).isBefore(moment())) {
-        return response.json(
-            { error: 'Expired authorization_code', code: TokenErrorCodes.VALID_CODE_EXPIRED },
-            { status: 400, statusText: 'Expired authorization_code' }
         );
     }
 
@@ -83,7 +66,7 @@ export async function POST(request: Request) {
 
         return jwt.sign(payload, constants.SECRET, { expiresIn: 60 * 5 });
     }
-    const accessToken = createAccessToken(validCode.user);
+    const accessToken = createAccessToken(authorizationCode.user);
 
     return response.json({ access_token: accessToken });
 }

@@ -1,6 +1,4 @@
-import { ForwardRefExoticComponent, RefAttributes, SVGProps } from 'react';
-
-export type AppType = {
+export type ApplicationType = {
     id: number;
     name: string;
     url: string;
@@ -8,7 +6,7 @@ export type AppType = {
     color: string | null;
 };
 
-export type UserAppType = {
+export type UserApplicationType = {
     id: number;
     lastAccessed: Date | null;
 };

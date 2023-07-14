@@ -1,6 +1,6 @@
 import constants from '@/constants/constants';
+import { applicationService, authorizationCodeService } from '@/db/handler';
 import { authOptions } from '@/lib/next-auth/authOptions';
-import { prisma } from '@/lib/prisma/prisma';
 import moment from 'moment';
 import { getServerSession, Session } from 'next-auth';
 import { NextResponse as response } from 'next/server';
@@ -23,7 +23,7 @@ export async function POST(request: Request) {
     if (!applicationId) {
         return response.json({}, { status: 400, statusText: 'Invalid application_id' });
     }
-    const validApplication = await prisma.application.findUnique({ where: { id: applicationId } });
+    const validApplication = await applicationService.getApplicationById(applicationId);
     if (!validApplication) {
         return response.json({}, { status: 400, statusText: 'Invalid application_id' });
     }
@@ -38,23 +38,7 @@ export async function POST(request: Request) {
         return jwt.sign(payload, constants.SECRET, { expiresIn: 60 * 5 });
     }
     const code = createAuthorizationCode(session);
-
-    // upsert the user's authorization code in the database
-    await prisma.authorizationCode.upsert({
-        where: {
-            userId: user.id,
-        },
-        update: { code: code, expires: moment.utc().add(5, 'minutes').toDate() },
-        create: {
-            code: code,
-            expires: moment.utc().add(5, 'minutes').toDate(),
-            user: {
-                connect: {
-                    id: user.id,
-                },
-            },
-        },
-    });
+    await authorizationCodeService.upsertAuthorizationCode(code, user.id);
 
     return response.json({ authorization_code: code });
 }

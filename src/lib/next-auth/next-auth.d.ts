@@ -1,4 +1,4 @@
-import { UserAppType } from '@/types/appTypes';
+import { UserApplicationType } from '@/types/applicationTypes';
 import { User as PrismaUser, Role } from '@prisma/client';
 
 declare module 'next-auth' {
@@ -13,6 +13,6 @@ declare module 'next-auth' {
 
     interface Session {
         user: User;
-        applications: UserAppType[];
+        applications: UserApplicationType[];
     }
 }
