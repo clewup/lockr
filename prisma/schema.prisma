@@ -54,7 +54,7 @@ model User {
   authorizationCode AuthorizationCode?
   createdAt         DateTime           @default(now())
   updatedAt         DateTime           @updatedAt
-  UserApplication   UserApplication[]
+  userApplications  UserApplication[]
 }
 
 model VerificationToken {
@@ -80,15 +80,15 @@ model AuthorizationCode {
 }
 
 model Application {
-  id              Int               @id @default(autoincrement())
-  name            String
-  url             String
-  logo            String
-  isEnabled       Boolean           @default(true)
-  createdAt       DateTime          @default(now())
-  updatedAt       DateTime          @updatedAt
-  UserApplication UserApplication[]
-  secret          String            @unique
+  id               Int               @id @default(autoincrement())
+  name             String
+  url              String
+  logo             String
+  isEnabled        Boolean           @default(true)
+  createdAt        DateTime          @default(now())
+  updatedAt        DateTime          @updatedAt
+  userApplications UserApplication[]
+  secret           String            @unique
 }
 
 model UserApplication {

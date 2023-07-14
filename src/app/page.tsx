@@ -17,7 +17,7 @@ async function getApplications(): Promise<AppType[]> {
 }
 
 export const metadata = {
-    title: 'Lockr - Applications',
+    title: 'lockr - Applications',
 };
 
 export default async function Home() {

@@ -5,7 +5,7 @@ import { headers } from 'next/headers';
 import { redirect } from 'next/navigation';
 
 export const metadata = {
-    title: 'Lockr - Account',
+    title: 'lockr - Account',
 };
 
 export default async function Account() {

@@ -10,7 +10,7 @@ import { headers } from 'next/headers';
 import React, { ReactNode } from 'react';
 
 export const metadata = {
-    title: 'Lockr',
+    title: 'lockr',
     description: 'Authentication Service',
 };
 
