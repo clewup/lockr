@@ -25,7 +25,6 @@ const Header = () => {
                     width={50}
                     height={50}
                 />
-                <h1 className="text-white font-semibold text-4xl">lockr</h1>
             </Link>
             <m.div
                 variants={{

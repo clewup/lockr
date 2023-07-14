@@ -3,7 +3,7 @@ import PageWrapper from '@/components/PageWrapper/PageWrapper';
 import { applicationService } from '@/db/handler';
 
 export const metadata = {
-    title: 'lockr - Applications',
+    title: 'LOCKR - Applications',
 };
 
 export default async function Home() {

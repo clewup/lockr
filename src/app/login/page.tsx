@@ -61,7 +61,7 @@ export default function Login() {
                             width={50}
                             height={50}
                         />
-                        <h1 className="text-5xl font-roboto font-bold">lockr</h1>
+                        <h1 className="text-5xl font-roboto font-bold">LOCKR</h1>
                     </span>
                 </m.span>
 
