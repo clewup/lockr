@@ -10,9 +10,9 @@ async function getApplications(): Promise<AppType[]> {
             name: true,
             url: true,
             logo: true,
-            isEnabled: true,
+            color: true,
         },
-        orderBy: [{ isEnabled: 'desc' }, { createdAt: 'desc' }],
+        orderBy: [{ createdAt: 'desc' }],
     });
 }
 

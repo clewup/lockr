@@ -4,12 +4,11 @@ import useApi from '@/lib/common/hooks/useApi/useApi';
 import { AppType } from '@/types/appTypes';
 import moment from 'moment';
 import { useSession } from 'next-auth/react';
+import Image from 'next/image';
 import { FC, useState } from 'react';
-import cx from 'classnames';
 import { SyncLoader } from 'react-spinners';
 import { motion as m } from 'framer-motion';
-import { StarIcon as StarOutlineIcon, ArrowRightOnRectangleIcon } from '@heroicons/react/24/outline';
-import { StarIcon as StarSolidIcon } from '@heroicons/react/24/solid';
+import cx from 'classnames';
 
 interface ApplicationProps {
     app: AppType;
@@ -38,18 +37,28 @@ const Application: FC<ApplicationProps> = ({ app }) => {
         window.open(formattedUrl, '_blank');
     }
 
+    const backgroundColor = app.color ? `bg-[${app.color}]` : 'bg-primary';
+
     return (
-        <m.div
-            className={cx('cursor-pointer w-full z-10 p-3 rounded-md flex flex-col justify-between', {
-                'opacity-70 pointer-events-none': !app.isEnabled,
-            })}>
+        <div className="cursor-pointer w-full z-10 p-3 rounded-md flex flex-col justify-between">
             {isLoading ? (
                 <div className="h-full w-full flex justify-center items-center">
-                    <SyncLoader size={15} color="#111111" />
+                    <SyncLoader size={15} color="#cccccc" />
                 </div>
             ) : (
                 <div className="flex flex-col gap-2">
-                    <div className="w-full aspect-square bg-primary rounded-md" onClick={navigateToApp}></div>
+                    <div
+                        className={`w-full aspect-square rounded-md relative p-5 ${backgroundColor}`}
+                        onClick={navigateToApp}>
+                        {app.logo && (
+                            <Image
+                                src={app.logo}
+                                alt={app.name}
+                                fill={true}
+                                className="h-full aspect-square object-contain p-5"
+                            />
+                        )}
+                    </div>
 
                     <div className="text-center flex flex-col gap-2">
                         <h1 className="text-2xl font-semibold">{app.name}</h1>
@@ -62,7 +71,7 @@ const Application: FC<ApplicationProps> = ({ app }) => {
                     </div>
                 </div>
             )}
-        </m.div>
+        </div>
     );
 };
 

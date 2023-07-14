@@ -83,12 +83,12 @@ model Application {
   id               Int               @id @default(autoincrement())
   name             String
   url              String
-  logo             String
-  isEnabled        Boolean           @default(true)
+  logo             String?
   createdAt        DateTime          @default(now())
   updatedAt        DateTime          @updatedAt
   userApplications UserApplication[]
   secret           String            @unique
+  color            String?
 }
 
 model UserApplication {

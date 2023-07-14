@@ -4,8 +4,8 @@ export type AppType = {
     id: number;
     name: string;
     url: string;
-    logo: string;
-    isEnabled: boolean;
+    logo: string | null;
+    color: string | null;
 };
 
 export type UserAppType = {
