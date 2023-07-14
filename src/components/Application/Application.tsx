@@ -38,7 +38,7 @@ const Application: FC<ApplicationProps> = ({ application: { id, name, url, logo,
     const backgroundColor = color ? `bg-[${color}]` : 'bg-primary';
 
     return (
-        <div className="cursor-pointer w-full z-10 p-3 rounded-md flex flex-col justify-between">
+        <div className="w-full z-10 p-3 rounded-md flex flex-col justify-between">
             {isLoading ? (
                 <div className="h-full w-full flex justify-center items-center">
                     <SyncLoader size={15} color="#cccccc" />
@@ -46,7 +46,7 @@ const Application: FC<ApplicationProps> = ({ application: { id, name, url, logo,
             ) : (
                 <div className="flex flex-col gap-2">
                     <div
-                        className={`w-full aspect-square rounded-md relative p-5 ${backgroundColor}`}
+                        className={`cursor-pointer w-full aspect-square rounded-md relative p-5 ${backgroundColor}`}
                         onClick={navigateToApp}>
                         {logo && (
                             <Image
