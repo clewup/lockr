@@ -2,7 +2,7 @@ import { UserType } from '@/lib/common/types/userTypes';
 import { User } from '@prisma/client';
 
 export function mapUser(user: User): UserType {
-    return {
+    return <UserType>{
         id: user.id,
         name: user.name,
         email: user.email,
