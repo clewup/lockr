@@ -13,7 +13,7 @@ export async function GET(request: NextRequest) {
     const accessToken = authorizationHeader.split(' ')[1];
     const decodedAccessToken = jwt.decode(accessToken) as any;
 
-    if (!['Admin', 'Role'].includes(decodedAccessToken.role)) {
+    if (!decodedAccessToken?.role || !['Admin', 'Client'].includes(decodedAccessToken?.role)) {
         return response.json({}, { status: 401 });
     }
 
