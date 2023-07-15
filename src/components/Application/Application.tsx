@@ -2,6 +2,7 @@
 
 import useApi from '@/lib/common/hooks/useApi/useApi';
 import { ApplicationType } from '@/types/applicationTypes';
+import cx from 'classnames';
 import moment from 'moment';
 import { useSession } from 'next-auth/react';
 import Image from 'next/image';
@@ -35,7 +36,7 @@ const Application: FC<ApplicationProps> = ({ application: { id, name, url, logo,
         window.open(formattedUrl, '_blank');
     }
 
-    const backgroundColor = color ? `bg-[${color}]` : 'bg-primary';
+    const backgroundColor = color ?? '#661AE6';
 
     return (
         <div className="w-full z-10 p-3 rounded-md flex flex-col justify-between">
@@ -46,7 +47,8 @@ const Application: FC<ApplicationProps> = ({ application: { id, name, url, logo,
             ) : (
                 <div className="flex flex-col gap-2">
                     <div
-                        className={`cursor-pointer w-full aspect-square rounded-md relative p-5 ${backgroundColor}`}
+                        style={{ backgroundColor: backgroundColor }}
+                        className="cursor-pointer w-full aspect-square rounded-md relative p-5"
                         onClick={navigateToApp}>
                         {logo && (
                             <Image
