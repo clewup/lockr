@@ -1,5 +1,6 @@
 'use client';
 
+import { UserType } from '@/lib/common/types/userTypes';
 import { createContext, Dispatch, FC, ReactNode, SetStateAction, useContext, useState } from 'react';
 
 type UserContextValues = {
