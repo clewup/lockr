@@ -30,6 +30,9 @@ Lockr is designed to handle user authentication and authorization in a secure an
 - Framer Motion
 - NextAuth
 - JSON Web Tokens (JWT)
+- Tailwind
+- Formik
+- Yup
   
 ## Screenshots
 
